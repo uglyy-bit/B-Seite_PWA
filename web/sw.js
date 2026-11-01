@@ -4,7 +4,7 @@
 // Requests to other servers (Discogs, MusicBrainz) are left alone.
 'use strict';
 
-const VERSION = 'e05cfa168f17';
+const VERSION = '52ded112dfcd';
 const FILES = ["assets/AssetManifest.bin", "assets/AssetManifest.bin.json", "assets/FontManifest.json", "assets/NOTICES", "assets/assets/fonts/Inter-Medium.ttf", "assets/assets/fonts/Inter-OFL.txt", "assets/assets/fonts/Inter-Regular.ttf", "assets/assets/fonts/Inter-SemiBold.ttf", "assets/fonts/MaterialIcons-Regular.otf", "assets/shaders/ink_sparkle.frag", "assets/shaders/stretch_effect.frag", "canvaskit/canvaskit.js", "canvaskit/canvaskit.wasm", "drift_worker.js", "favicon.png", "flutter.js", "flutter_bootstrap.js", "icons/Icon-192.png", "icons/Icon-512.png", "icons/Icon-maskable-192.png", "icons/Icon-maskable-512.png", "index.html", "main.dart.js", "manifest.json", "sqlite3.wasm", "version.json"];
 const PREFIX = 'b-seite-';
 const CACHE = PREFIX + VERSION;
