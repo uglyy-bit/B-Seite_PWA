@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <base href="/B-Seite_PWA/">
+
+  <meta charset="UTF-8">
+  <meta name="description" content="Deine Plattensammlung. Jede Platte an ihrem Platz.">
+  <meta name="theme-color" content="#0F0F10">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="B-Seite">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <title>B-Seite</title>
+  <style>
+    html, body { background: #0F0F10; overscroll-behavior: none; }
+  </style>
+</head>
+<body>
+  <script>
+    // iOS/iPadOS (Safari + Home-Bildschirm-PWA): Beim Aufklappen der Tastatur
+    // schiebt Safari die ganze Seite nach oben, um Flutters unsichtbares
+    // Eingabefeld sichtbar zu machen. Flutter weicht der Tastatur aber selbst
+    // schon aus (viewInsets) – zusammen ergibt das eine doppelte Verschiebung,
+    // Dialoge rutschen unter die Statusleiste. Eine Flutter-Seite scrollt als
+    // Dokument nie, also wird die Browser-Verschiebung sofort zurückgesetzt.
+    // Android/Chrome verhält sich korrekt und bleibt unberührt.
+    (function () {
+      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (!isIOS) return;
+      var vv = window.visualViewport;
+      function reset() {
+        if (window.scrollX !== 0 || window.scrollY !== 0 ||
+            (vv && vv.offsetTop !== 0)) {
+          window.scrollTo(0, 0);
+        }
+      }
+      window.addEventListener('scroll', reset, { passive: true });
+      if (vv) {
+        vv.addEventListener('scroll', reset);
+        vv.addEventListener('resize', reset);
+      }
+      document.addEventListener('focusout', function () {
+        setTimeout(reset, 50);
+      });
+    })();
+  </script>
+  <script>
+    // Die App soll ohne Netz starten, und die Sammlung liegt nur im Browser:
+    // sw.js hält die Dateien vor, persist() bittet den Browser, den Speicher
+    // nicht von sich aus zu räumen.
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+    if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
